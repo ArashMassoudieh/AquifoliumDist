@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="AquifoliumDist" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/AquifoliumDist" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/AquifoliumDist" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="../jsoncpp/include" />
+			<Add directory="../Aquifolium/include" />
+			<Add directory="../Aquifolium/include/GA" />
+		</Compiler>
+		<Linker>
+			<Add option="-larmadillo" />
+			<Add option="-lgomp" />
+			<Add option="-lpthread" />
+		</Linker>
+		<Unit filename="../Aquifolium/include/BTC.h" />
+		<Unit filename="../Aquifolium/include/BTCSet.h" />
+		<Unit filename="../Aquifolium/include/Block.h" />
+		<Unit filename="../Aquifolium/include/Command.h" />
+		<Unit filename="../Aquifolium/include/Condition.h" />
+		<Unit filename="../Aquifolium/include/DistributionNUnif.h" />
+		<Unit filename="../Aquifolium/include/ErrorHandler.h" />
+		<Unit filename="../Aquifolium/include/Expression.h" />
+		<Unit filename="../Aquifolium/include/GA/Binary.h" />
+		<Unit filename="../Aquifolium/include/GA/Distribution.h" />
+		<Unit filename="../Aquifolium/include/GA/DistributionNUnif.h" />
+		<Unit filename="../Aquifolium/include/GA/GA.h" />
+		<Unit filename="../Aquifolium/include/GA/GA.hpp" />
+		<Unit filename="../Aquifolium/include/GA/Individual.h" />
+		<Unit filename="../Aquifolium/include/Link.h" />
+		<Unit filename="../Aquifolium/include/Matrix.h" />
+		<Unit filename="../Aquifolium/include/Matrix_arma.h" />
+		<Unit filename="../Aquifolium/include/MetaModel.h" />
+		<Unit filename="../Aquifolium/include/NormalDist.h" />
+		<Unit filename="../Aquifolium/include/Object.h" />
+		<Unit filename="../Aquifolium/include/Objective_Function.h" />
+		<Unit filename="../Aquifolium/include/Objective_Function_Set.h" />
+		<Unit filename="../Aquifolium/include/Parameter.h" />
+		<Unit filename="../Aquifolium/include/Parameter_Set.h" />
+		<Unit filename="../Aquifolium/include/Precipitation.h" />
+		<Unit filename="../Aquifolium/include/Quan.h" />
+		<Unit filename="../Aquifolium/include/QuanSet.h" />
+		<Unit filename="../Aquifolium/include/QuickSort.h" />
+		<Unit filename="../Aquifolium/include/Rule.h" />
+		<Unit filename="../Aquifolium/include/RxnParameter.h" />
+		<Unit filename="../Aquifolium/include/Script.h" />
+		<Unit filename="../Aquifolium/include/Source.h" />
+		<Unit filename="../Aquifolium/include/StringOP.h" />
+		<Unit filename="../Aquifolium/include/System.h" />
+		<Unit filename="../Aquifolium/include/Vector.h" />
+		<Unit filename="../Aquifolium/include/Vector_arma.h" />
+		<Unit filename="../Aquifolium/include/constituent.h" />
+		<Unit filename="../Aquifolium/include/ordered_hash.h" />
+		<Unit filename="../Aquifolium/include/ordered_map.h" />
+		<Unit filename="../Aquifolium/include/precalculatedfunction.h" />
+		<Unit filename="../Aquifolium/include/reaction.h" />
+		<Unit filename="../Aquifolium/include/solutionlogger.h" />
+		<Unit filename="../Aquifolium/src/BTC.cpp" />
+		<Unit filename="../Aquifolium/src/BTCSet.cpp" />
+		<Unit filename="../Aquifolium/src/Block.cpp" />
+		<Unit filename="../Aquifolium/src/Command.cpp" />
+		<Unit filename="../Aquifolium/src/Condition.cpp" />
+		<Unit filename="../Aquifolium/src/ErrorHandler.cpp" />
+		<Unit filename="../Aquifolium/src/Expression.cpp" />
+		<Unit filename="../Aquifolium/src/GA/Binary.cpp" />
+		<Unit filename="../Aquifolium/src/GA/Distribution.cpp" />
+		<Unit filename="../Aquifolium/src/GA/DistributionNUnif.cpp" />
+		<Unit filename="../Aquifolium/src/GA/Individual.cpp" />
+		<Unit filename="../Aquifolium/src/Link.cpp" />
+		<Unit filename="../Aquifolium/src/Matrix.cpp" />
+		<Unit filename="../Aquifolium/src/Matrix_arma.cpp" />
+		<Unit filename="../Aquifolium/src/MetaModel.cpp" />
+		<Unit filename="../Aquifolium/src/NormalDist.cpp" />
+		<Unit filename="../Aquifolium/src/Object.cpp" />
+		<Unit filename="../Aquifolium/src/Objective_Function.cpp" />
+		<Unit filename="../Aquifolium/src/Objective_Function_Set.cpp" />
+		<Unit filename="../Aquifolium/src/Parameter.cpp" />
+		<Unit filename="../Aquifolium/src/Parameter_Set.cpp" />
+		<Unit filename="../Aquifolium/src/Precipitation.cpp" />
+		<Unit filename="../Aquifolium/src/Quan.cpp" />
+		<Unit filename="../Aquifolium/src/QuanSet.cpp" />
+		<Unit filename="../Aquifolium/src/QuickSort.cpp" />
+		<Unit filename="../Aquifolium/src/Rule.cpp" />
+		<Unit filename="../Aquifolium/src/RxnParameter.cpp" />
+		<Unit filename="../Aquifolium/src/Script.cpp" />
+		<Unit filename="../Aquifolium/src/Source.cpp" />
+		<Unit filename="../Aquifolium/src/StringOP.cpp" />
+		<Unit filename="../Aquifolium/src/System.cpp" />
+		<Unit filename="../Aquifolium/src/Vector.cpp" />
+		<Unit filename="../Aquifolium/src/Vector_arma.cpp" />
+		<Unit filename="../Aquifolium/src/constituent.cpp" />
+		<Unit filename="../Aquifolium/src/precalculatedfunction.cpp" />
+		<Unit filename="../Aquifolium/src/reaction.cpp" />
+		<Unit filename="../Aquifolium/src/solutionlogger.cpp" />
+		<Unit filename="../jsoncpp/src/lib_json/json_reader.cpp" />
+		<Unit filename="../jsoncpp/src/lib_json/json_value.cpp" />
+		<Unit filename="../jsoncpp/src/lib_json/json_writer.cpp" />
+		<Unit filename="main.cpp" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
