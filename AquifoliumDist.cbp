@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="AquifoliumDist/include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="AquifoliumDist/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -34,6 +36,7 @@
 			<Add directory="../jsoncpp/include" />
 			<Add directory="../Aquifolium/include" />
 			<Add directory="../Aquifolium/include/GA" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add option="-larmadillo" />
@@ -116,13 +119,16 @@
 		<Unit filename="../Aquifolium/src/Vector.cpp" />
 		<Unit filename="../Aquifolium/src/Vector_arma.cpp" />
 		<Unit filename="../Aquifolium/src/constituent.cpp" />
+		<Unit filename="../Aquifolium/src/observation.cpp" />
 		<Unit filename="../Aquifolium/src/precalculatedfunction.cpp" />
 		<Unit filename="../Aquifolium/src/reaction.cpp" />
 		<Unit filename="../Aquifolium/src/solutionlogger.cpp" />
 		<Unit filename="../jsoncpp/src/lib_json/json_reader.cpp" />
 		<Unit filename="../jsoncpp/src/lib_json/json_value.cpp" />
 		<Unit filename="../jsoncpp/src/lib_json/json_writer.cpp" />
+		<Unit filename="include/DistSystem.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/DistSystem.cpp" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -6,10 +6,12 @@ using namespace std;
 int main()
 {
     DistSystem system;
-    //system.GetQuanTemplate("/home/arash/Projects/QAquifolium/resources/main_components.json");
+    system.GetQuanTemplate("/home/arash/Projects/QAquifolium/resources/main_components.json");
+    system.AppendQuanTemplate("/home/arash/Projects/QAquifolium/resources/unsaturated_soil.json");
     //system.ReadSystemSettingsTemplate("/home/arash/Projects/QAquifolium/resources/settings.json");
-    Script scr("/home/arash/Dropbox/Aquifolium/infiltration_test.scr",&system);
+
     system.clear();
-    system.CreateFromScript(scr);
-    system.Solve();
+    system.CreateGrid("overlandflow","Catchment","/home/arash/Projects/AqDistFiles/Sligo_500.txt");
+    system.SavetoScriptFile("/home/arash/Projects/AqDistFiles/testout.scr");
+    //system.Solve();
 }
