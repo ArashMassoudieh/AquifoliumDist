@@ -1,11 +1,11 @@
 #include <iostream>
-#include "System.h"
+#include "DistSystem.h"
 #include "Script.h"
 using namespace std;
 
 int main()
 {
-    System system;
+    DistSystem system;
     //system.GetQuanTemplate("/home/arash/Projects/QAquifolium/resources/main_components.json");
     //system.ReadSystemSettingsTemplate("/home/arash/Projects/QAquifolium/resources/settings.json");
     Script scr("/home/arash/Dropbox/Aquifolium/infiltration_test.scr",&system);
