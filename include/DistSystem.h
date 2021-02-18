@@ -24,7 +24,8 @@ class DistSystem : public System
         bool SetProperty(const string &groupname, const string &propname, const string &propvalue);
         bool SetPropertyGrid(const string &groupname, const string &propname, const string &propvaluematrixfilename);
         bool SetGeometry(const string &groupname, double x_0, double y_0, double dx, double dy, double width=200, double height=200);
-    protected:
+        bool CreateGridLinks(const string &groupname, const string &type);
+protected:
         map<string,GridData> groups;
     private:
 };

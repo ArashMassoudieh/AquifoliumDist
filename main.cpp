@@ -16,6 +16,7 @@ int main()
     system.SetProperty("overlandflow","ManningCoeff","0.02");
     system.SetGeometry("overlandflow",0,0,500,500,200,200);
     system.SetPropertyGrid("overlandflow","elevation","/home/arash/Projects/AqDistFiles/Topo_500.txt");
+    system.CreateGridLinks("overlandflow","Catchment_link");
     system.SavetoScriptFile("/home/arash/Projects/AqDistFiles/testout.scr");
     system.GetErrorHandler()->Write("/home/arash/Projects/AqDistFiles/errors.txt");
     //system.Solve();

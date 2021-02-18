@@ -49,7 +49,8 @@ bool DistSystem::CreateGrid(const string &name, const string &type, const string
     while (!file.eof())
     {
         vector<int> nodes = aquiutils::ATOI(aquiutils::getline(file));
-        groups[name].gridblocks.push_back(vector<string>());
+        if (nodes.size()>0)
+            groups[name].gridblocks.push_back(vector<string>());
         for (unsigned int j=0; j<nodes.size(); j++)
         {
             if (nodes[j]==1)
@@ -142,6 +143,69 @@ bool DistSystem::SetGeometry(const string &groupname, double x_0, double y_0, do
                 block(groups[groupname].gridblocks[i][j])->SetProperty("y",aquiutils::numbertostring(j*dy+0.5*dy+y_0));
                 block(groups[groupname].gridblocks[i][j])->SetProperty("_width",aquiutils::numbertostring(width));
                 block(groups[groupname].gridblocks[i][j])->SetProperty("_height",aquiutils::numbertostring(height));
+            }
+        }
+    }
+    return true;
+}
+
+bool DistSystem::CreateGridLinks(const string &groupname, const string &type)
+{
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetProperty","Group '" + groupname +"' was not found!",14017);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size()-1; i++)
+    {
+        groups[groupname].gridHlinks.push_back(vector<string>());
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size()-1; j++)
+        {
+            if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr && groups[groupname].gridblocks[i+1][j]!="" && block(groups[groupname].gridblocks[i+1][j])!=nullptr)
+            {
+                Link _link;
+                _link.SetQuantities(GetMetaModel(),type);
+                _link.SetType(type);
+                string linkname = groups[groupname].gridblocks[i][j] + "-" + groups[groupname].gridblocks[i+1][j];
+                _link.SetName(linkname);
+                AddLink(_link, groups[groupname].gridblocks[i][j], groups[groupname].gridblocks[i+1][j]);
+
+                object(linkname)->SetName(linkname);
+
+                AddAllConstituentRelateProperties(link(linkname));
+                SetVariableParents();
+                groups[groupname].gridHlinks[i].push_back(linkname);
+            }
+            else
+            {
+                groups[groupname].gridHlinks[i].push_back("");
+            }
+        }
+    }
+
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size()-1; i++)
+    {
+        groups[groupname].gridVlinks.push_back(vector<string>());
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size()-1; j++)
+        {
+            if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr && groups[groupname].gridblocks[i][j+1]!="" && block(groups[groupname].gridblocks[i][j+1])!=nullptr)
+            {
+                Link _link;
+                _link.SetQuantities(GetMetaModel(),type);
+                _link.SetType(type);
+                string linkname = groups[groupname].gridblocks[i][j] + "-" + groups[groupname].gridblocks[i][j+1];
+                _link.SetName(linkname);
+                AddLink(_link, groups[groupname].gridblocks[i][j], groups[groupname].gridblocks[i][j+1]);
+
+                object(linkname)->SetName(linkname);
+
+                AddAllConstituentRelateProperties(link(linkname));
+                SetVariableParents();
+                groups[groupname].gridVlinks[i].push_back(linkname);
+            }
+            else
+            {
+                groups[groupname].gridVlinks[i].push_back("");
             }
         }
     }
