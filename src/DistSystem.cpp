@@ -44,31 +44,32 @@ bool DistSystem::CreateGrid(const string &name, const string &type, const string
         ErrorHandler().Append("DistSystem","DistSystem","CreateGrid","File '" + matrixfile +"' was not found!",14002);
         return false;
     }
-    int i=0;
+    unsigned int i=0;
     vector<vector<bool>> gridonoff;
     while (!file.eof())
     {
         vector<int> nodes = aquiutils::ATOI(aquiutils::getline(file));
-        groups[name].gridblocks.push_back(vector<Block*>());
-        for (int j=0; j<nodes.size(); j++)
+        groups[name].gridblocks.push_back(vector<string>());
+        for (unsigned int j=0; j<nodes.size(); j++)
         {
             if (nodes[j]==1)
             {
-                string blockname = name + "(" + aquiutils::numbertostring(i) + "," + aquiutils::numbertostring(j) + ")";
+                string blockname = name + "(" + aquiutils::numbertostring(i) + "$" + aquiutils::numbertostring(j) + ")";
                 Block B;
                 B.SetType(type);
                 B.SetName(blockname);
                 System::AddBlock(B);
                 System::object(blockname)->SetName(blockname);
-                groups[name].gridblocks[i].push_back(System::block(blockname));
+                groups[name].gridblocks[i].push_back(blockname);
             }
             else
             {
-                groups[name].gridblocks[i].push_back(nullptr);
+                groups[name].gridblocks[i].push_back("");
             }
         }
         i++;
     }
+    return true;
 }
 
 bool DistSystem::SetProperty(const string &groupname, const string &propname, const string &propvalue)
@@ -78,18 +79,72 @@ bool DistSystem::SetProperty(const string &groupname, const string &propname, co
         ErrorHandler().Append("DistSystem","DistSystem","SetProperty","Group '" + groupname +"' was not found!",14011);
         return false;
     }
-    for (int i=0; i<groups[groupname].gridblocks.size(); i++)
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size(); i++)
     {
-        for (int j=0; j<groups[groupname].gridblocks[i].size(); j++)
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size(); j++)
         {
-            if (groups[groupname].gridblocks[i][j]!=nullptr)
-                groups[groupname].gridblocks[i][j]->SetProperty(propname,propvalue);
+            if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr)
+                block(groups[groupname].gridblocks[i][j])->SetProperty(propname,propvalue);
         }
     }
     return true;
 }
 bool DistSystem::SetPropertyGrid(const string &groupname, const string &propname, const string &propvaluematrixfilename)
 {
+    ifstream file(propvaluematrixfilename);
+    if (!file.good())
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","CreateGrid","File '" + propvaluematrixfilename +"' was not found!",14012);
+        return false;
+    }
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetProperty","Group '" + groupname +"' was not found!",14013);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size(); i++)
+    {
 
+        if (file.eof())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGrid","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14014);
+            return false;
+        }
+        vector<string> nodevalues = aquiutils::getline(file);
+        if (nodevalues.size()<groups[groupname].gridblocks[i].size())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGrid","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14015);
+            return false;
+        }
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size(); j++)
+        {
+            if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr)
+                block(groups[groupname].gridblocks[i][j])->SetProperty(propname,nodevalues[j]);
+        }
+    }
+    return true;
+}
+
+bool DistSystem::SetGeometry(const string &groupname, double x_0, double y_0, double dx, double dy, double width, double height)
+{
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetProperty","Group '" + groupname +"' was not found!",14016);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size(); i++)
+    {
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size(); j++)
+        {
+            if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr)
+            {
+                block(groups[groupname].gridblocks[i][j])->SetProperty("x",aquiutils::numbertostring(i*dx+0.5*dx+x_0));
+                block(groups[groupname].gridblocks[i][j])->SetProperty("y",aquiutils::numbertostring(j*dy+0.5*dy+y_0));
+                block(groups[groupname].gridblocks[i][j])->SetProperty("_width",aquiutils::numbertostring(width));
+                block(groups[groupname].gridblocks[i][j])->SetProperty("_height",aquiutils::numbertostring(height));
+            }
+        }
+    }
+    return true;
 }
 

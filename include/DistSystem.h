@@ -6,10 +6,10 @@
 
 struct GridData
 {
-    vector<vector<Block*>> gridblocks;
-    vector<vector<Link*>> gridHlinks;
-    vector<vector<Link*>> gridVlinks;
-    vector<vector<Link*>> gridtogridlinks;
+    vector<vector<string>> gridblocks;
+    vector<vector<string>> gridHlinks;
+    vector<vector<string>> gridVlinks;
+    vector<vector<string>> gridtogridlinks;
 };
 
 class DistSystem : public System
@@ -23,6 +23,7 @@ class DistSystem : public System
         bool CreateGrid(const string &name, const string &type, const string &matrixfile);
         bool SetProperty(const string &groupname, const string &propname, const string &propvalue);
         bool SetPropertyGrid(const string &groupname, const string &propname, const string &propvaluematrixfilename);
+        bool SetGeometry(const string &groupname, double x_0, double y_0, double dx, double dy, double width=200, double height=200);
     protected:
         map<string,GridData> groups;
     private:
