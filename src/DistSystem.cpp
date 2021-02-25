@@ -90,6 +90,43 @@ bool DistSystem::SetProperty(const string &groupname, const string &propname, co
     }
     return true;
 }
+
+bool DistSystem::SetPropertyHLinks(const string &groupname, const string &propname, const string &propvalue)
+{
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyHLinks","Group '" + groupname +"' was not found!",14051);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridHlinks.size(); i++)
+    {
+        for (unsigned int j=0; j<groups[groupname].gridHlinks[i].size(); j++)
+        {
+            if (groups[groupname].gridHlinks[i][j]!="" && block(groups[groupname].gridHlinks[i][j])!=nullptr)
+                link(groups[groupname].gridHlinks[i][j])->SetProperty(propname,propvalue);
+        }
+    }
+    return true;
+}
+bool DistSystem::SetPropertyVLinks(const string &groupname, const string &propname, const string &propvalue)
+{
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyVLinks","Group '" + groupname +"' was not found!",14052);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridVlinks.size(); i++)
+    {
+        for (unsigned int j=0; j<groups[groupname].gridVlinks[i].size(); j++)
+        {
+            if (groups[groupname].gridVlinks[i][j]!="" && block(groups[groupname].gridVlinks[i][j])!=nullptr)
+                link(groups[groupname].gridVlinks[i][j])->SetProperty(propname,propvalue);
+        }
+    }
+    return true;
+}
+
+
 bool DistSystem::SetPropertyGrid(const string &groupname, const string &propname, const string &propvaluematrixfilename)
 {
     ifstream file(propvaluematrixfilename);
@@ -159,7 +196,7 @@ bool DistSystem::CreateGridLinks(const string &groupname, const string &type)
     for (unsigned int i=0; i<groups[groupname].gridblocks.size()-1; i++)
     {
         groups[groupname].gridHlinks.push_back(vector<string>());
-        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size()-1; j++)
+        for (unsigned int j=0; j<groups[groupname].gridblocks[i].size(); j++)
         {
             if (groups[groupname].gridblocks[i][j]!="" && block(groups[groupname].gridblocks[i][j])!=nullptr && groups[groupname].gridblocks[i+1][j]!="" && block(groups[groupname].gridblocks[i+1][j])!=nullptr)
             {
@@ -183,7 +220,7 @@ bool DistSystem::CreateGridLinks(const string &groupname, const string &type)
         }
     }
 
-    for (unsigned int i=0; i<groups[groupname].gridblocks.size()-1; i++)
+    for (unsigned int i=0; i<groups[groupname].gridblocks.size(); i++)
     {
         groups[groupname].gridVlinks.push_back(vector<string>());
         for (unsigned int j=0; j<groups[groupname].gridblocks[i].size()-1; j++)
@@ -212,3 +249,74 @@ bool DistSystem::CreateGridLinks(const string &groupname, const string &type)
     return true;
 }
 
+bool DistSystem::SetPropertyGridHlinks(const string &groupname, const string &propname, const string &propvaluematrixfilename)
+{
+    ifstream file(propvaluematrixfilename);
+    if (!file.good())
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridHLinkd","File '" + propvaluematrixfilename +"' was not found!",14018);
+        return false;
+    }
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridHLinkd","Group '" + groupname +"' was not found!",14019);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridHlinks.size(); i++)
+    {
+
+        if (file.eof())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridHLinkd","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14020);
+            return false;
+        }
+        vector<string> nodevalues = aquiutils::getline(file);
+        if (nodevalues.size()<groups[groupname].gridHlinks[i].size())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridHLinks","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14021);
+            return false;
+        }
+        for (unsigned int j=0; j<groups[groupname].gridHlinks[i].size(); j++)
+        {
+            if (groups[groupname].gridHlinks[i][j]!="" && link(groups[groupname].gridHlinks[i][j])!=nullptr)
+                link(groups[groupname].gridHlinks[i][j])->SetProperty(propname,nodevalues[j]);
+        }
+    }
+    return true;
+}
+
+bool DistSystem::SetPropertyGridVlinks(const string &groupname, const string &propname, const string &propvaluematrixfilename)
+{
+    ifstream file(propvaluematrixfilename);
+    if (!file.good())
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridVlinks","File '" + propvaluematrixfilename +"' was not found!",14022);
+        return false;
+    }
+    if (groups.count(groupname)==0)
+    {
+        ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridVlinks","Group '" + groupname +"' was not found!",14023);
+        return false;
+    }
+    for (unsigned int i=0; i<groups[groupname].gridHlinks.size(); i++)
+    {
+
+        if (file.eof())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridVlinks","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14024);
+            return false;
+        }
+        vector<string> nodevalues = aquiutils::getline(file);
+        if (nodevalues.size()<groups[groupname].gridVlinks[i].size())
+        {
+            ErrorHandler().Append("DistSystem","DistSystem","SetPropertyGridVlinks","File '" + propvaluematrixfilename +"' is not consistent with the grid!",14025);
+            return false;
+        }
+        for (unsigned int j=0; j<groups[groupname].gridVlinks[i].size(); j++)
+        {
+            if (groups[groupname].gridVlinks[i][j]!="" && link(groups[groupname].gridVlinks[i][j])!=nullptr)
+                link(groups[groupname].gridVlinks[i][j])->SetProperty(propname,nodevalues[j]);
+        }
+    }
+    return true;
+}
