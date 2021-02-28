@@ -8,10 +8,11 @@ int main()
     DistSystem system;
     system.GetQuanTemplate("/home/arash/Projects/QAquifolium/resources/main_components.json");
     system.AppendQuanTemplate("/home/arash/Projects/QAquifolium/resources/rainfall_runoff.json");
-    //system.ReadSystemSettingsTemplate("/home/arash/Projects/QAquifolium/resources/settings.json");
+    system.ReadSystemSettingsTemplate("/home/arash/Projects/QAquifolium/resources/settings.json");
 
     system.clear();
     system.CreateGrid("overlandflow","catchment-distributed","/home/arash/Projects/AqDistFiles/Sligo_500.txt");
+
     Source precip;
     precip.SetQuantities(system.GetMetaModel(),"Precipitation");
     precip.SetType("Precipitation");
@@ -29,12 +30,14 @@ int main()
     system.SetPropertyHLinks("overlandflow","Length","500");
     system.SetPropertyVLinks("overlandflow","Width","500");
     system.SetPropertyVLinks("overlandflow","Length","500");
-    system.SetProperty("tstart","0");
-    system.SetProperty("tend","10");
-    system.SetProperty("write_solution_details","yes");
-    system.SetProperty("silent","0");
+    system.SetSystemSettingsObjectProperties("simulation_start_time","0");
+    system.SetSystemSettingsObjectProperties("simulation_end_time","10");
+    system.SetSystemSettingsObjectProperties("write_solution_details","yes");
+    system.SetSystemSettingsObjectProperties("silent","0");
     system.SavetoScriptFile("/home/arash/Projects/AqDistFiles/testout.scr");
     system.GetErrorHandler()->Write("/home/arash/Projects/AqDistFiles/errors.txt");
+    system.SetSystemSettings();
+
     system.Solve(true);
     system.GetOutputs().writetofile(string("/home/arash/Projects/AqDistFiles/outputs.txt"));
 
