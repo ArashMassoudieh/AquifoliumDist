@@ -102,7 +102,7 @@ bool DistSystem::SetPropertyHLinks(const string &groupname, const string &propna
     {
         for (unsigned int j=0; j<groups[groupname].gridHlinks[i].size(); j++)
         {
-            if (groups[groupname].gridHlinks[i][j]!="" && block(groups[groupname].gridHlinks[i][j])!=nullptr)
+            if (groups[groupname].gridHlinks[i][j]!="" && link(groups[groupname].gridHlinks[i][j])!=nullptr)
                 link(groups[groupname].gridHlinks[i][j])->SetProperty(propname,propvalue);
         }
     }
@@ -119,7 +119,7 @@ bool DistSystem::SetPropertyVLinks(const string &groupname, const string &propna
     {
         for (unsigned int j=0; j<groups[groupname].gridVlinks[i].size(); j++)
         {
-            if (groups[groupname].gridVlinks[i][j]!="" && block(groups[groupname].gridVlinks[i][j])!=nullptr)
+            if (groups[groupname].gridVlinks[i][j]!="" && link(groups[groupname].gridVlinks[i][j])!=nullptr)
                 link(groups[groupname].gridVlinks[i][j])->SetProperty(propname,propvalue);
         }
     }

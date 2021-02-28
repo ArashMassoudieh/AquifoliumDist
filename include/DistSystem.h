@@ -22,6 +22,10 @@ class DistSystem : public System
         GridData* group(string s);
         bool CreateGrid(const string &name, const string &type, const string &matrixfile);
         bool SetProperty(const string &groupname, const string &propname, const string &propvalue);
+        bool SetProperty(const string &propname, const string &propvalue)
+        {
+            return System::SetProperty(propname,propvalue);
+        }
         bool SetPropertyHLinks(const string &groupname, const string &propname, const string &propvalue);
         bool SetPropertyVLinks(const string &groupname, const string &propname, const string &propvalue);
         bool SetPropertyGrid(const string &groupname, const string &propname, const string &propvaluematrixfilename);
